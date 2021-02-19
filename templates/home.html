@@ -1,10 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE Html>
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+
+<title>Coin Clicker</title>
+
 </head>
 <body>
-<h1>Hello World!</h1>
+<h1>Hello World Clicker!</h1>
+<h3 id="currency"></h3>
+<h4 id="autoClickers"></h4>
+<h4 id="autoClickerCost"></h4>
+<button id="gainCurrency" onclick ="gainCurrency()">click</button>
+<button id="buyAutoClicker" onclick ="buyClicker()">Buy autoclicker</button>
+
+<script>
+
+let currency = 0;
+let currencyPerClick = 1;
+let currencyPerSecond = 0;
+let autoClickers = 0;
+let autoClickerCost = 10; // Base cost of an auto clicker
+
+function gainCurrency(){
+    currency += currencyPerClick;
+}
+
+setInterval( // Updating values
+    function (){
+        document.getElementById("currency").innerHTML = "Currency: " + currency;
+        document.getElementById("autoClickers").innerHTML = "Auto Clickers: " + autoClickers;
+        document.getElementById("autoClickerCost").innerHTML = "Auto Clicker Cost: " + autoClickerCost;
+    }
+)
+
+setInterval( // Disabling/Enabling button
+    function (){
+        if (currency >= autoClickerCost){
+            document.getElementById("buyAutoClicker").disabled = false;
+        } else {
+            document.getElementById("buyAutoClicker").disabled = true;
+        }
+    }
+)
+
+setInterval( // Auto Clicking (Once per second)
+    function autoClick(){
+        currency += autoClickers;
+    }
+, 1000)
+
+function buyClicker(){
+    if (currency >= autoClickerCost) {
+        autoClickers += 1;
+        currency -= autoClickerCost;
+        autoClickerCost += (Math.floor(1.5 * autoClickers));
+    }
+}
+
+</script>
 </body>
-</html>
